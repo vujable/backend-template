@@ -1,1 +1,1 @@
-exports.testController = require("./test.controller");
+exports.pingController = require("./ping.controller");

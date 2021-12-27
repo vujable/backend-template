@@ -5,8 +5,8 @@ const controllers = require("../controllers");
 const routes = function () {
   const apiRoute = express.Router();
 
-  const testController = controllers.testController();
-  apiRoute.route("/test").post(testController);
+  const pingController = controllers.pingController();
+  apiRoute.route("/ping").post(pingController.ping);
 
   return apiRoute;
 };

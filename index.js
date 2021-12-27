@@ -1,24 +1,24 @@
-const express = require('express');
-const mongoose = require('mongoose');
+const express = require("express");
+const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
-const cors = require('cors');
+const cors = require("cors");
 
 const app = express();
 
-app.use('/static', express.static('public'))
+app.use("/static", express.static("public"));
 
-const dotenv = require('dotenv');
+const dotenv = require("dotenv");
 dotenv.config();
-
-const port = process.env.port;
 
 /* Db connection */
 
-var uri = process.env.mongodburi;
 
-mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect(process.env.MONGOURI, {
+  useUnifiedTopology: true,
+  useNewUrlParser: true,
+});
 const connection = mongoose.connection;
-connection.once("open", function() {
+connection.once("open", function () {
   console.log("MongoDB database connection established successfully");
 });
 
@@ -27,11 +27,13 @@ connection.once("open", function() {
 const publicRoutes = require("./routes/publicRoutes")();
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json({
+app.use(
+  bodyParser.json({
     verify: (req, res, buf) => {
       req.rawBody = buf;
-    }
-}));
+    },
+  })
+);
 
 app.use(cors());
 
@@ -49,6 +51,6 @@ app.use(cors({
 }));*/
 
 app.use("/api", publicRoutes); //Put public routes here that do not require Authentication
-app.get('/', (req, res) => res.send('Hello World!'));
+app.get("/", (req, res) => res.send("Hello World!"));
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(process.env.PORT, () => console.log(`Example app listening on port ${process.env.PORT}!`));

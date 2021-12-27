@@ -1,0 +1,1 @@
+exports.catchAsyncErrors = require("./catchAsyncErrors");
